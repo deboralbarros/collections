@@ -1,38 +1,52 @@
-import { CardMedia, CardActions, IconButton } from "@material-ui/core";
-import { Favorite } from "@material-ui/icons";
+import { useState, useEffect } from "react";
+import { CardMedia, IconButton } from "@material-ui/core";
+import { MdFavorite } from "react-icons/md";
+import { useLocation } from "react-router-dom";
 
-import { List, CardCustom as Card } from "./style";
+import { CardCustom as Card, Container } from "./style";
 
-const CardsList = ({ list, handleFavorite, removeFavorite }) => {
-  const favorites = window.localStorage.getItem("favoriteChars");
+const CardsList = ({ list, addFavorite, removeFavorite }) => {
+  const [category, setCategory] = useState("");
 
-  const handleAddOrRemoveFavorite = (id) => {
-    if (favorites.includes(id)) {
-      removeFavorite(id);
-      return;
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname === "/pokemon") {
+      setCategory("favoritePokemons");
+    } else if (pathname === "/rickandmorty") {
+      setCategory("favoriteChars");
     }
+  }, [pathname]);
 
-    handleFavorite(id);
-  };
+  const favorite = window.localStorage.getItem(category);
 
   return (
-    <List>
-      {list.map((char) => (
-        <Card key={char.id}>
-          <p>{char.name}</p>
-          <CardMedia component="img" image={char.image} />
-          <CardActions disableSpacing>
-            <IconButton onClick={() => handleAddOrRemoveFavorite(char.id)}>
-              <Favorite
+    <Container>
+      {list.map((item) => (
+        <Card key={item.id}>
+          <p>
+            {item.name}
+            <IconButton
+              title="Clique para favoritar"
+              onClick={() => {
+                if (favorite.includes(item.id)) {
+                  removeFavorite(item.id);
+                } else {
+                  addFavorite(item.id);
+                }
+              }}
+            >
+              <MdFavorite
                 style={{
-                  color: favorites.includes(char.id) ? "red" : "gray",
+                  color: favorite.includes(item.id) ? "red" : "gray",
                 }}
               />
             </IconButton>
-          </CardActions>
+          </p>
+          <CardMedia component="img" image={item.image} />
         </Card>
       ))}
-    </List>
+    </Container>
   );
 };
 

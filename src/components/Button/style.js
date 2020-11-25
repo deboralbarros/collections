@@ -1,10 +1,15 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.button`
-  width: 30%;
-  padding: 15px;
   max-width: 200px;
   border-radius: 8px;
   border: none;
-  background: #e9b44c;
+  color: #e9b44c;
+  text-decoration: underline;
+  background: transparent;
+  transition: color 0.2s;
+
+  :hover {
+    color: #e2d14d;
+  }
 `;

@@ -1,60 +1,77 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-import CardsList from "../../components/CardsList";
 import Button from "../../components/Button";
+import CardsList from "../../components/CardsList";
+
+import { ButtonsContainer, Title } from "./style";
 
 const RickAndMorty = () => {
   const [chars, setChars] = useState([]);
-  const [previous, setPrevious] = useState("");
+  const [favoriteChars, setFavoriteChars] = useState([]);
+  const [prev, setPrev] = useState(null);
+  const [next, setNext] = useState(null);
   const [url, setUrl] = useState(
     "https://rickandmortyapi.com/api/character/?page=1"
   );
-  const [next, setNext] = useState("");
-  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     axios.get(url).then((res) => {
+      if (res.data.info.next) {
+        setNext(res.data.info.next);
+      }
+
+      if (res.data.info.prev) {
+        setPrev(res.data.info.prev);
+      }
+
       setChars(res.data.results);
-      res.data.info.next && setNext(res.data.info.next);
-      res.data.info.prev && setPrevious(res.data.info.prev);
     });
   }, [url]);
 
-  const handleFavorite = (charId) => {
-    setFavorites([...favorites, charId]);
-  };
-
-  const removeFavorite = (charId) => {
-    const getFavorites = JSON.parse(
-      window.localStorage.getItem("favoriteChars")
-    );
-
-    const newFavorites = getFavorites.filter((item) => item !== charId);
-
-    setFavorites(newFavorites);
-  };
-
-  window.localStorage.setItem("favoriteChars", JSON.stringify(favorites));
-
-  const handlePrevious = () => {
-    setUrl(previous);
-  };
-
-  const handleNext = () => {
+  const nextPage = () => {
     setUrl(next);
   };
 
+  const prevPage = () => {
+    setUrl(prev);
+  };
+
+  const addFavorite = (char) => {
+    setFavoriteChars([...favoriteChars, char]);
+  };
+
+  const removeFavorite = (char) => {
+    const getFavoriteList = window.localStorage.getItem("favoriteChars");
+
+    const newFavorites = JSON.parse(getFavoriteList).filter(
+      (item) => item !== char
+    );
+
+    setFavoriteChars(newFavorites);
+  };
+
+  window.localStorage.setItem("favoriteChars", JSON.stringify(favoriteChars));
+
   return (
-    <div>
+    <>
+      <Title>Rick And Morty</Title>
+      <ButtonsContainer>
+        <Button onClick={prevPage}>Página anterior</Button>
+        <Button onClick={nextPage}>Próxima página</Button>
+      </ButtonsContainer>
+
       <CardsList
         list={chars}
-        handleFavorite={handleFavorite}
+        addFavorite={addFavorite}
         removeFavorite={removeFavorite}
       />
-      <Button onClick={handlePrevious}>Página anterior</Button>
-      <Button onClick={handleNext}>Próxima página</Button>
-    </div>
+
+      <ButtonsContainer>
+        <Button onClick={prevPage}>Página anterior</Button>
+        <Button onClick={nextPage}>Próxima página</Button>
+      </ButtonsContainer>
+    </>
   );
 };
 

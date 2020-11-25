@@ -2,28 +2,22 @@ import styled from "styled-components";
 
 import { Card } from "@material-ui/core";
 
-export const List = styled.div`
+export const Container = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-
-  @media (max-width: 800px) {
-    flex-direction: column;
-  }
 `;
 
 export const CardCustom = styled(Card)`
+  width: 250px;
   margin: 10px;
-  width: 30%;
-  max-width: 300px;
 
   p {
-    font: 600 1.3rem Poppins, sans-serif;
-    padding: 10px;
-  }
-
-  @media (max-width: 800px) {
-    width: 60%;
+    font: 500 1rem Ubuntu;
+    display: flex;
+    padding: 0 5px;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
