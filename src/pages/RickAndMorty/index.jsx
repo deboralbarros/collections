@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import Button from "../../components/Button";
@@ -6,14 +7,15 @@ import CardsList from "../../components/CardsList";
 
 import { ButtonsContainer, Title } from "./style";
 
-const RickAndMorty = () => {
+const RickAndMorty = ({ setFavoriteChars }) => {
   const [chars, setChars] = useState([]);
-  const [favoriteChars, setFavoriteChars] = useState([]);
   const [prev, setPrev] = useState(null);
   const [next, setNext] = useState(null);
   const [url, setUrl] = useState(
     "https://rickandmortyapi.com/api/character/?page=1"
   );
+
+  const history = useHistory();
 
   useEffect(() => {
     axios.get(url).then((res) => {
@@ -38,7 +40,11 @@ const RickAndMorty = () => {
   };
 
   const addFavorite = (char) => {
-    setFavoriteChars([...favoriteChars, char]);
+    const getFavoriteList = JSON.parse(
+      window.localStorage.getItem("favoriteChars")
+    );
+
+    setFavoriteChars([...getFavoriteList, char]);
   };
 
   const removeFavorite = (char) => {
@@ -51,7 +57,9 @@ const RickAndMorty = () => {
     setFavoriteChars(newFavorites);
   };
 
-  window.localStorage.setItem("favoriteChars", JSON.stringify(favoriteChars));
+  const navigateToFavoriteChars = () => {
+    history.push("/rickandmorty/favorite");
+  };
 
   return (
     <>
@@ -67,10 +75,7 @@ const RickAndMorty = () => {
         removeFavorite={removeFavorite}
       />
 
-      <ButtonsContainer>
-        <Button onClick={prevPage}>Página anterior</Button>
-        <Button onClick={nextPage}>Próxima página</Button>
-      </ButtonsContainer>
+      <Button onClick={navigateToFavoriteChars}>Listar os Favoritos</Button>
     </>
   );
 };

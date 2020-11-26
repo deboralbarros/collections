@@ -9,18 +9,27 @@ const HeaderMenu = ({ isUser, setAuthentication }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const key = pathname.replace("/", "");
+    if (pathname === "/") {
+      setSelected(["graphic"]);
+    } else {
+      const key = pathname.replace("/", "");
 
-    setSelected([key]);
+      setSelected([key]);
+    }
   }, [pathname]);
 
   const { Item } = Menu;
 
   return (
     <Menu selectedKeys={selected} mode="horizontal" theme_color="primary">
+      <Item key="graphic">
+        <Link to="/">Gráfico</Link>
+      </Item>
+
       <Item key="rickandmorty">
         <Link to="/rickandmorty">Rick and Morty</Link>
       </Item>
+
       <Item key="pokemon">
         <Link to="/pokemon">Pokemon</Link>
       </Item>

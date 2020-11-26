@@ -13,10 +13,10 @@ export const CardCustom = styled(Card)`
   width: 250px;
   margin: 10px;
 
-  p {
+  div {
     font: 500 1rem Ubuntu;
     display: flex;
-    padding: 0 5px;
+    padding: 2px 5px;
     justify-content: space-between;
     align-items: center;
   }
