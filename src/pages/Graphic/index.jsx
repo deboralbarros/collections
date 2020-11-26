@@ -15,7 +15,7 @@ const Graphic = () => {
     axios
       .get("https://pokeapi.co/api/v2/pokemon")
       .then((res) => setCountPokemon(res.data.count));
-  });
+  }, []);
 
   const data = {
     labels: ["Rick And Morty", "Pokemon"],
