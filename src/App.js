@@ -9,13 +9,24 @@ import Menu from "./components/Menu";
 import "./App.css";
 
 function App() {
-  const [favoriteChars, setFavoriteChars] = useState([]);
-  const [favoritePokemons, setFavoritePokemons] = useState([]);
+  const favoriteCharsFromLocalStorage = JSON.parse(
+    window.localStorage.getItem("favoriteChars") || "[]"
+  );
+
+  const favoritePokemonsFromLocalStorage = JSON.parse(
+    window.localStorage.getItem("favoritePokemons") || "[]"
+  );
+
+  const [favoriteChars, setFavoriteChars] = useState(
+    favoriteCharsFromLocalStorage
+  );
+  const [favoritePokemons, setFavoritePokemons] = useState(
+    favoritePokemonsFromLocalStorage
+  );
 
   const handleFavoritePokemons = (pokemons) => {
     setFavoritePokemons(pokemons);
   };
-
   window.localStorage.setItem(
     "favoritePokemons",
     JSON.stringify(favoritePokemons)
@@ -26,7 +37,6 @@ function App() {
   };
 
   window.localStorage.setItem("favoriteChars", JSON.stringify(favoriteChars));
-
   return (
     <>
       <GlobalStyle></GlobalStyle>

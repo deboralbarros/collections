@@ -7,8 +7,12 @@ const FavoriteCardsList = ({ list }) => {
   return (
     <Container>
       {list.map((item) => (
-        <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
-          <Card key={item.id}>
+        <motion.div
+          key={item.id}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Card>
             <div>{item.name}</div>
             <CardMedia component="img" image={item.image} />
           </Card>
