@@ -20,7 +20,6 @@ const Pokemon = ({ setFavoritePokemons }) => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(history);
     axios.get(url).then((res) => {
       if (res.data.next) setNext(res.data.next);
       if (res.data.previous) setPrev(res.data.previous);
