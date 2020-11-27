@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
+
 import { Pie } from "react-chartjs-2";
-import styled from "styled-components";
-import axios from "axios";
+import Title from "../../components/Title";
 
 const Graphic = () => {
   const [countPokemon, setCountPokemon] = useState(0);
   const [countRickAndMorty, setCountRickAndMorty] = useState(0);
 
   useEffect(() => {
-    axios
-      .get("https://rickandmortyapi.com/api/character/")
-      .then((res) => setCountRickAndMorty(res.data.info.count));
+    const localStorageChars = JSON.parse(
+      window.localStorage.getItem("favoriteChars") || "[]"
+    );
+    setCountRickAndMorty(localStorageChars.length);
 
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon")
-      .then((res) => setCountPokemon(res.data.count));
-  }, []);
+    const localStoragePokemons = JSON.parse(
+      window.localStorage.getItem("favoritePokemons") || "[]"
+    );
+    setCountPokemon(localStoragePokemons.length);
+  }, [countPokemon, countRickAndMorty]);
 
   const data = {
     labels: ["Rick And Morty", "Pokemon"],
@@ -30,15 +32,14 @@ const Graphic = () => {
 
   return (
     <div>
-      <Title>Gráfico de Personagens</Title>
-      <Pie data={data} />
+      <Title>Gráfico de Personagens Favoritados</Title>
+      {countPokemon > 0 || countRickAndMorty > 0 ? (
+        <Pie data={data} />
+      ) : (
+        <Title>Não há personagens favoritados</Title>
+      )}
     </div>
   );
 };
-
-const Title = styled.h1`
-  text-align: center;
-  color: #fff;
-`;
 
 export default Graphic;

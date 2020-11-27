@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { Menu } from "antd";
 
-const HeaderMenu = ({ isUser, setAuthentication }) => {
+const HeaderMenu = () => {
   const [selected, setSelected] = useState([]);
 
   const { pathname } = useLocation();

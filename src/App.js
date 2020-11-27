@@ -2,8 +2,7 @@ import { useState } from "react";
 
 import GlobalStyle from "./styles/global";
 
-import Routes from "./routes";
-
+import Routes from "./routes/index";
 import Menu from "./components/Menu";
 
 import "./App.css";
@@ -35,8 +34,8 @@ function App() {
   const handleFavoriteChars = (chars) => {
     setFavoriteChars(chars);
   };
-
   window.localStorage.setItem("favoriteChars", JSON.stringify(favoriteChars));
+
   return (
     <>
       <GlobalStyle></GlobalStyle>

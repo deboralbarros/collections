@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import FavoriteCardsList from "../../components/FavoriteCards";
-import { Title } from "./style";
+import CardsList from "../../components/CardsList";
+import Title from "../../components/Title";
 
 const FavoritePokemons = ({ favoritePokemons }) => {
   const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
@@ -36,7 +36,7 @@ const FavoritePokemons = ({ favoritePokemons }) => {
     <>
       <Title>Pokemons Favoritos</Title>
 
-      <FavoriteCardsList list={favorites} />
+      <CardsList list={favorites} isFavorite />
     </>
   );
 };

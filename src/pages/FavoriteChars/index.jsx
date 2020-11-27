@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import FavoriteCardsList from "../../components/FavoriteCards";
-import { Title } from "./style";
+import CardsList from "../../components/CardsList";
+import Title from "../../components/Title";
 
 const FavoriteChars = ({ favoriteChars }) => {
   const [favorites, setFavorites] = useState([]);
@@ -35,7 +35,7 @@ const FavoriteChars = ({ favoriteChars }) => {
     <>
       <Title>Personagens Favoritos</Title>
 
-      <FavoriteCardsList list={favorites} />
+      <CardsList list={favorites} isFavorite />
     </>
   );
 };

@@ -4,8 +4,10 @@ import axios from "axios";
 
 import Button from "../../components/Button";
 import CardsList from "../../components/CardsList";
+import Title from "../../components/Title";
+import ButtonsContainer from "../../components/ButtonsContainer";
 
-import { ButtonsContainer, Title } from "./style";
+import { addToFavorites, removeFavorite } from "../../helper/favorites";
 
 const RickAndMorty = ({ setFavoriteChars }) => {
   const [chars, setChars] = useState([]);
@@ -39,22 +41,20 @@ const RickAndMorty = ({ setFavoriteChars }) => {
     setUrl(prev);
   };
 
-  const addFavorite = (char) => {
-    const getFavoriteList = JSON.parse(
-      window.localStorage.getItem("favoriteChars")
-    );
+  const handleAddToFavorite = (char) => {
+    const itemLocalStorage = "favoriteChars";
 
-    setFavoriteChars([...getFavoriteList, char]);
+    const newList = addToFavorites(char, itemLocalStorage);
+
+    setFavoriteChars(newList);
   };
 
-  const removeFavorite = (char) => {
-    const getFavoriteList = window.localStorage.getItem("favoriteChars");
+  const handleRemoveFavorite = (char) => {
+    const itemLocalStorage = "favoriteChars";
 
-    const newFavorites = JSON.parse(getFavoriteList).filter(
-      (item) => item !== char
-    );
+    const newList = removeFavorite(char, itemLocalStorage);
 
-    setFavoriteChars(newFavorites);
+    setFavoriteChars(newList);
   };
 
   const navigateToFavoriteChars = () => {
@@ -64,15 +64,12 @@ const RickAndMorty = ({ setFavoriteChars }) => {
   return (
     <>
       <Title>Rick And Morty</Title>
-      <ButtonsContainer>
-        <Button onClick={prevPage}>Página anterior</Button>
-        <Button onClick={nextPage}>Próxima página</Button>
-      </ButtonsContainer>
+      <ButtonsContainer prevPage={prevPage} nextPage={nextPage} />
 
       <CardsList
         list={chars}
-        addFavorite={addFavorite}
-        removeFavorite={removeFavorite}
+        addFavorite={handleAddToFavorite}
+        removeFavorite={handleRemoveFavorite}
       />
 
       <Button onClick={navigateToFavoriteChars}>Listar os Favoritos</Button>

@@ -4,8 +4,10 @@ import axios from "axios";
 
 import Button from "../../components/Button";
 import CardsList from "../../components/CardsList";
+import Title from "../../components/Title";
+import ButtonsContainer from "../../components/ButtonsContainer";
 
-import { ButtonsContainer, Title } from "./style";
+import { addToFavorites, removeFavorite } from "../../helper/favorites";
 
 const Pokemon = ({ setFavoritePokemons }) => {
   const [pokemons, setPokemons] = useState([]);
@@ -18,9 +20,10 @@ const Pokemon = ({ setFavoritePokemons }) => {
   const history = useHistory();
 
   useEffect(() => {
+    console.log(history);
     axios.get(url).then((res) => {
-      res.data.next && setNext(res.data.next);
-      res.data.previous && setPrev(res.data.previous);
+      if (res.data.next) setNext(res.data.next);
+      if (res.data.previous) setPrev(res.data.previous);
 
       const nextOffset = res.data.next
         .split("?")[1]
@@ -31,16 +34,16 @@ const Pokemon = ({ setFavoritePokemons }) => {
         setUrl("https://pokeapi.co/api/v2/pokemon?offset=140&limit=10");
       }
 
-      setPokemons(
-        res.data.results.map((pokemon) => {
-          const brokenUrl = pokemon.url.split("/");
-          const id = brokenUrl[brokenUrl.length - 2];
+      const pokemonsList = res.data.results.map((pokemon) => {
+        const brokenUrl = pokemon.url.split("/");
+        const id = brokenUrl[brokenUrl.length - 2];
 
-          const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+        const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
-          return { ...pokemon, id, image };
-        })
-      );
+        return { ...pokemon, id, image };
+      });
+
+      setPokemons(pokemonsList);
     });
   }, [url]);
 
@@ -52,22 +55,20 @@ const Pokemon = ({ setFavoritePokemons }) => {
     setUrl(prev);
   };
 
-  const addFavorite = (pokemon) => {
-    const getFavoriteList = JSON.parse(
-      window.localStorage.getItem("favoritePokemons")
-    );
+  const handleAddToFavorite = (pokemon) => {
+    const itemLocalStorage = "favoritePokemons";
 
-    setFavoritePokemons([...getFavoriteList, pokemon]);
+    const newList = addToFavorites(pokemon, itemLocalStorage);
+
+    setFavoritePokemons(newList);
   };
 
-  const removeFavorite = (pokemon) => {
-    const getFavoriteList = window.localStorage.getItem("favoritePokemons");
+  const handleRemoveFavorite = (pokemon) => {
+    const itemLocalStorage = "favoritePokemons";
 
-    const newFavorites = JSON.parse(getFavoriteList).filter(
-      (item) => item !== pokemon
-    );
+    const newList = removeFavorite(pokemon, itemLocalStorage);
 
-    setFavoritePokemons(newFavorites);
+    setFavoritePokemons(newList);
   };
 
   const navigateToFavoritePokemons = () => {
@@ -77,15 +78,12 @@ const Pokemon = ({ setFavoritePokemons }) => {
   return (
     <>
       <Title>Pokemon</Title>
-      <ButtonsContainer>
-        <Button onClick={prevPage}>Página anterior</Button>
-        <Button onClick={nextPage}>Próxima página</Button>
-      </ButtonsContainer>
+      <ButtonsContainer prevPage={prevPage} nextPage={nextPage} />
 
       <CardsList
         list={pokemons}
-        addFavorite={addFavorite}
-        removeFavorite={removeFavorite}
+        addFavorite={handleAddToFavorite}
+        removeFavorite={handleRemoveFavorite}
       />
 
       <Button onClick={navigateToFavoritePokemons}>Listar os Favoritos</Button>

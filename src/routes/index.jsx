@@ -1,10 +1,10 @@
 import { Route, Switch } from "react-router-dom";
 
-import RickAndMorty from "./pages/RickAndMorty";
-import Pokemon from "./pages/Pokemon";
-import FavoritePokemons from "./pages/FavoritePokemons";
-import FavoriteChars from "./pages/FavoriteChars";
-import Graphic from "./pages/Graphic";
+import RickAndMorty from "../pages/RickAndMorty";
+import Pokemon from "../pages/Pokemon";
+import FavoritePokemons from "../pages/FavoritePokemons";
+import FavoriteChars from "../pages/FavoriteChars";
+import Graphic from "../pages/Graphic";
 
 const Routes = ({
   setFavoritePokemons,
