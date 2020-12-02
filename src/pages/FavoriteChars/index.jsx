@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 import CardsList from "../../components/CardsList";
 import Title from "../../components/Title";
 
-const FavoriteChars = ({ favoriteChars }) => {
+const FavoriteChars = () => {
   const [favorites, setFavorites] = useState([]);
+
+  const { favoriteChars } = useSelector((state) => state);
 
   const url = "https://rickandmortyapi.com/api/character/?page=1";
 

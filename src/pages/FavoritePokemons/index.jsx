@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 import CardsList from "../../components/CardsList";
 import Title from "../../components/Title";
 
-const FavoritePokemons = ({ favoritePokemons }) => {
+const FavoritePokemons = () => {
   const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
 
   const [favorites, setFavorites] = useState([]);
+
+  const { favoritePokemons } = useSelector((state) => state);
 
   useEffect(() => {
     axios.get(url).then((res) => {

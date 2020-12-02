@@ -6,31 +6,18 @@ import FavoritePokemons from "../pages/FavoritePokemons";
 import FavoriteChars from "../pages/FavoriteChars";
 import Graphic from "../pages/Graphic";
 
-const Routes = ({
-  setFavoritePokemons,
-  setFavoriteChars,
-  favoritePokemons,
-  favoriteChars,
-}) => {
+const Routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Graphic} />
 
-      <Route exact path="/rickandmorty">
-        <RickAndMorty setFavoriteChars={setFavoriteChars} />
-      </Route>
+      <Route exact path="/rickandmorty" component={RickAndMorty} />
 
-      <Route exact path="/pokemon">
-        <Pokemon setFavoritePokemons={setFavoritePokemons} />
-      </Route>
+      <Route exact path="/pokemon" component={Pokemon} />
 
-      <Route path="/pokemon/favorite">
-        <FavoritePokemons favoritePokemons={favoritePokemons} />
-      </Route>
+      <Route path="/pokemon/favorite" component={FavoritePokemons} />
 
-      <Route path="/rickandmorty/favorite">
-        <FavoriteChars favoriteChars={favoriteChars} />
-      </Route>
+      <Route path="/rickandmorty/favorite" component={FavoriteChars} />
     </Switch>
   );
 };

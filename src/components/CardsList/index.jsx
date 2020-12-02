@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CardMedia, IconButton } from "@material-ui/core";
 import { MdFavorite } from "react-icons/md";
 import { useLocation } from "react-router-dom";
@@ -6,7 +7,17 @@ import { motion } from "framer-motion";
 
 import { CardCustom as Card, Container } from "./style";
 
-const CardsList = ({ list, addFavorite, removeFavorite, isFavorite }) => {
+import {
+  addToFavoritesCharsThunk,
+  removeFromFavoritesCharsThunk,
+} from "../../store/modules/favoriteChars/thunks";
+
+import {
+  addToFavoritePokemonsThunk,
+  removeFromFavoritePokemonsThunk,
+} from "../../store/modules/favoritePokemons/thunks";
+
+const CardsList = ({ list, isFavorite }) => {
   const [category, setCategory] = useState("");
 
   const { pathname } = useLocation();
@@ -19,7 +30,25 @@ const CardsList = ({ list, addFavorite, removeFavorite, isFavorite }) => {
     }
   }, [pathname]);
 
-  const favorite = window.localStorage.getItem(category);
+  const { favoriteChars, favoritePokemons } = useSelector((state) => state);
+
+  const handleClick = (item) => {
+    if (category === "favoriteChars") {
+      if (favoriteChars.includes(item.id)) {
+        dispatch(removeFromFavoritesCharsThunk(item.id));
+      } else {
+        dispatch(addToFavoritesCharsThunk(item.id));
+      }
+    } else if (category === "favoritePokemons") {
+      if (favoritePokemons.includes(item.id)) {
+        dispatch(removeFromFavoritePokemonsThunk(item.id));
+      } else {
+        dispatch(addToFavoritePokemonsThunk(item.id));
+      }
+    }
+  };
+
+  const dispatch = useDispatch();
 
   return (
     <Container>
@@ -40,17 +69,18 @@ const CardsList = ({ list, addFavorite, removeFavorite, isFavorite }) => {
                 >
                   <IconButton
                     title="Clique para favoritar"
-                    onClick={() => {
-                      if (favorite?.includes(item.id)) {
-                        removeFavorite(item.id);
-                      } else {
-                        addFavorite(item.id);
-                      }
-                    }}
+                    onClick={() => handleClick(item)}
                   >
                     <MdFavorite
                       style={{
-                        color: favorite?.includes(item.id) ? "red" : "gray",
+                        color:
+                          category === "favoritePokemons"
+                            ? favoritePokemons.includes(item.id)
+                              ? "red"
+                              : "gray"
+                            : favoriteChars.includes(item.id)
+                            ? "red"
+                            : "gray",
                       }}
                     />
                   </IconButton>

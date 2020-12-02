@@ -7,9 +7,7 @@ import CardsList from "../../components/CardsList";
 import Title from "../../components/Title";
 import ButtonsContainer from "../../components/ButtonsContainer";
 
-import { addToFavorites, removeFavorite } from "../../helper/favorites";
-
-const Pokemon = ({ setFavoritePokemons }) => {
+const Pokemon = () => {
   const [pokemons, setPokemons] = useState([]);
   const [prev, setPrev] = useState("");
   const [next, setNext] = useState("");
@@ -54,22 +52,6 @@ const Pokemon = ({ setFavoritePokemons }) => {
     setUrl(prev);
   };
 
-  const handleAddToFavorite = (pokemon) => {
-    const itemLocalStorage = "favoritePokemons";
-
-    const newList = addToFavorites(pokemon, itemLocalStorage);
-
-    setFavoritePokemons(newList);
-  };
-
-  const handleRemoveFavorite = (pokemon) => {
-    const itemLocalStorage = "favoritePokemons";
-
-    const newList = removeFavorite(pokemon, itemLocalStorage);
-
-    setFavoritePokemons(newList);
-  };
-
   const navigateToFavoritePokemons = () => {
     history.push("/pokemon/favorite");
   };
@@ -79,11 +61,7 @@ const Pokemon = ({ setFavoritePokemons }) => {
       <Title>Pokemon</Title>
       <ButtonsContainer prevPage={prevPage} nextPage={nextPage} />
 
-      <CardsList
-        list={pokemons}
-        addFavorite={handleAddToFavorite}
-        removeFavorite={handleRemoveFavorite}
-      />
+      <CardsList list={pokemons} />
 
       <Button onClick={navigateToFavoritePokemons}>Listar os Favoritos</Button>
     </>

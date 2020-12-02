@@ -7,8 +7,6 @@ import CardsList from "../../components/CardsList";
 import Title from "../../components/Title";
 import ButtonsContainer from "../../components/ButtonsContainer";
 
-import { addToFavorites, removeFavorite } from "../../helper/favorites";
-
 const RickAndMorty = ({ setFavoriteChars }) => {
   const [chars, setChars] = useState([]);
   const [prev, setPrev] = useState(null);
@@ -41,22 +39,6 @@ const RickAndMorty = ({ setFavoriteChars }) => {
     setUrl(prev);
   };
 
-  const handleAddToFavorite = (char) => {
-    const itemLocalStorage = "favoriteChars";
-
-    const newList = addToFavorites(char, itemLocalStorage);
-
-    setFavoriteChars(newList);
-  };
-
-  const handleRemoveFavorite = (char) => {
-    const itemLocalStorage = "favoriteChars";
-
-    const newList = removeFavorite(char, itemLocalStorage);
-
-    setFavoriteChars(newList);
-  };
-
   const navigateToFavoriteChars = () => {
     history.push("/rickandmorty/favorite");
   };
@@ -66,11 +48,7 @@ const RickAndMorty = ({ setFavoriteChars }) => {
       <Title>Rick And Morty</Title>
       <ButtonsContainer prevPage={prevPage} nextPage={nextPage} />
 
-      <CardsList
-        list={chars}
-        addFavorite={handleAddToFavorite}
-        removeFavorite={handleRemoveFavorite}
-      />
+      <CardsList list={chars} />
 
       <Button onClick={navigateToFavoriteChars}>Listar os Favoritos</Button>
     </>
