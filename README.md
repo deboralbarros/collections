@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# 📦 Collections
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Você pode ver esta aplicação rodando [aqui](https://collections-with-redux-murex.vercel.app/).
 
-## Available Scripts
+O Collections é um projeto criado com ReactJs para praticar o uso de Redux e Redux Thunk.
 
-In the project directory, you can run:
+Esta aplicação é uma interface para colecionar personagens do Rick and Morty (buscando estes da [Rick and Morty API](https://rickandmortyapi.com/)) e de pokemons (buscando estes da [Poke Api](https://pokeapi.co/)).
 
-### `yarn start`
+Também há um gráfico mostrando os personagens e pokemons favoritados, utilizando o [ChartJs](https://www.chartjs.org/).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 👩‍🏫 Explicando a utilização do Redux
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Nesta aplicação, o Redux foi utilizado para resolver o problema de Prop Drilling, que significa vazamento de props, em que um componente pai passa uma props para o componente filho e o componente filho, passa essa props para o seu componente filho e assim por diante. Isso torna a manutenção do código muito difícil.
 
-### `yarn test`
+Então, com o Redux, é criado um state global, chamado de store, que pode ser acessado e modificado em qualquer parte da aplicação, sem que seja necessário ficar passando props entre componentes.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 💿 Como instalar e 🚀 Rodar
 
-### `yarn build`
+Para instalar, você precisa clonar o repositório no seu computador. Basta rodar o seguinte comando, no seu terminal:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<code>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    git clone https://github.com/deboralbarros/collections.git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+</code>
 
-### `yarn eject`
+Então, depois de clonado, você precisa entrar no diretório do projeto e baixar as dependências:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<code>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    cd collections
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    yarn install
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+</code>
 
-## Learn More
+Ou, você pode utilizar o npm, para baixar as dependências, caso não tenha o yarn instalado.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<code>
+    
+    npm install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+</code>
 
-### Code Splitting
+Agora, você pode iniciar o projeto com o seguinte comando:
+<code>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    yarn start
 
-### Analyzing the Bundle Size
+</code>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+ou
 
-### Making a Progressive Web App
+<code>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    npm start
 
-### Advanced Configuration
+</code>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+E então, o projeto estará rodando na sua máquina.
 
-### Deployment
+## 👩‍💻 Tecnologias utilizadas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+[ReactJs](https://pt-br.reactjs.org/) ➡️ Biblioteca javascript para desenvolvimento da interface
 
-### `yarn build` fails to minify
+[Redux](https://redux.js.org/) ➡️ Biblioteca javascript para gerenciamento de estados na aplicação
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Axios](https://github.com/axios/axios) ➡️ Cliente HTTP, utilizado para fazer as requisições back-end
